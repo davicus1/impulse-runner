@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  script(src="/javascripts/actions.js")
+  h1 #{title} Turn: #{turn}
+  h3 Sequence of Play: #{status}
+  h2 Impulse: #{impulse}
+  table#moves
+    tr
+      th= "Speed"
+      each speed in speeds
+        th= speed
+    tbody
+      tr
+        td= "Current"
+        each move in moves
+          td= move
+  p [Prev Impulse]
+  button#nextImpulse() Next Impulse
