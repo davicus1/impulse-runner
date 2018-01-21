@@ -15,17 +15,20 @@ var battleManager = {
 
 module.exports.BattleManager = battleManager;
 
-var unit = function (id) {
-    var name = "Unnamed";
-    var counter = id;
-    var speed = 0;
-    var race = "Generic";
-    var type = "Unknown";
+function unit(id) {
+    this.name = "Unnamed";
+    this.counter = id;
+    this.speed = 0;
+    this.race = "Generic";
+    this.type = "Unknown";
 };
 
-var unitManager = function () {
-    var units = new HashMap();
-};
+
+//Counter (id), unit
+var unitList = new HashMap();
+
+module.exports.Unit = unit;
+module.exports.UnitList = unitList;
 
 var impulseChart = [
       // 32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10, 9, 8, 7, 6, 5, 4, 3, 2, 1

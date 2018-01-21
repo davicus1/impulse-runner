@@ -16,12 +16,12 @@ module.exports = function(app) {
     app.route('/api/impulse/moves/:impulseNum')
         .get(impulseControl.get_moves_in_impulse_num);
 
-    app.route('/api/impulse/units')
+    app.route('/api/units')
         .get(impulseControl.get_units);
 
-    app.route('/api/impulse/units/:unitId')
+    app.route('/api/units/:unitId')
         .get(impulseControl.get_a_unit)
-        .put(impulseControl.update_a_unit)
+        .post(impulseControl.create_a_unit)
         .delete(impulseControl.delete_a_unit);
 
     app.route('/api/battle')

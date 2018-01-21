@@ -64,22 +64,53 @@ exports.get_moves_in_impulse_num = function(req, res) {
     res.json(impulse);
 };
 
-// GET /api/impulse/units
+// GET /api/units
 exports.get_units = function(req, res) {
-
+    res.json(impulseModel.UnitList.values());
 };
 
-// GET /api/impulse/units/:unitId
+function updateUnit(unit, updates) {
+    if (updates.name !== undefined && updates.name !== null) {
+        unit.name = updates.name
+    }
+    if (updates.speed !== undefined && updates.speed !== null) {
+        unit.speed = updates.speed
+    }
+    if (updates.race !== undefined && updates.race !== null) {
+        unit.race = updates.race
+    }
+    if (updates.type !== undefined && updates.type !== null) {
+        unit.type = updates.type
+    }
+    return unit;
+}
+
+// GET /api/units/:unitId
 exports.get_a_unit = function(req, res) {
-
+    var unitId = req.params.unitId;
+    res.json(impulseModel.UnitList.get(unitId));
 };
-// PUT /api/impulse/units/:unitId
-exports.update_a_unit = function(req, res) {
+// POST /api/units/:unitId
+exports.create_a_unit = function(req, res) {
+    var unitId = req.params.unitId;
+    var unitDetails = req.body;
+    var unit;
+    if (impulseModel.UnitList.has(unitId)) {
+        unit = impulseModel.UnitList.get(unitId);
+    } else {
+        unit = new impulseModel.Unit(unitId);
+    }
 
+    unit = updateUnit(unit,unitDetails);
+
+    impulseModel.UnitList.set(unitId,unit)
+    res.json(unit);
 };
-// DELETE /api/impulse/units/:unitId
+
+// DELETE /api/units/:unitId
 exports.delete_a_unit = function(req, res) {
-
+    var unitId = req.params.unitId;
+    impulseModel.UnitList.delete(unitId)
 };
 
 
@@ -88,7 +119,7 @@ exports.get_battle = function(req, res) {
     res.json(impulseModel.BattleManager);
 };
 
-// POSt /api/battle
+// POST /api/battle
 exports.set_battle = function(req, res) {
     var battleYear = req.body;
     var battle = impulseModel.BattleManager.title;
