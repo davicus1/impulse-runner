@@ -53,7 +53,6 @@ exports.increment_impulse = function(req, res) {
 
 // GET /api/impulse/moves
 exports.get_moves_in_impulse = function(req, res) {
-    impulseModel.ImpulseManager.impulse
     res.json(impulseModel.ImpulseChart[impulseModel.ImpulseManager.impulse]);
 };
 
@@ -62,6 +61,46 @@ exports.get_moves_in_impulse_num = function(req, res) {
     var impulseNum = req.params.impulseNum;
     var impulse = impulseModel.ImpulseChart[impulseNum];
     res.json(impulse);
+};
+
+exports.getUnitsMovingInImpulse = function(impulseNum) {
+    return getUnitsMovingInImpulse(impulseNum);
+};
+
+function getUnitsMovingInImpulse(impulseNum) {
+    var impulse = impulseModel.ImpulseChart[impulseNum];
+    var unitList = impulseModel.UnitList.values();
+    var movingUnits = [];
+
+    for ( var unitIterator in unitList ) {
+        var unit = unitList[unitIterator];
+        //TODO: The data stored here is fastest to slowest. The code is now confusing.
+        if (impulse[32 - unit.speed] > 0) {
+            movingUnits.push(unit);
+        }
+    }
+    //TODO: Sort this, or insert sorted, or make this an array of speeds, with units.
+    return movingUnits;
+}
+
+
+
+// GET /api/impulse/units/moves
+exports.get_units_moves_in_current_impulse = function(req, res) {
+    var impulseNum = impulseModel.ImpulseManager.impulse;
+
+    var movingUnits = getUnitsMovingInImpulse(impulseNum);
+
+    res.json(movingUnits);
+};
+
+// GET /api/impulse/units/moves/:impulseNum
+exports.get_units_moves_in_impulse_num = function(req, res) {
+    var impulseNum = req.params.impulseNum;
+
+    var movingUnits = getUnitsMovingInImpulse(impulseNum);
+
+    res.json(movingUnits);
 };
 
 // GET /api/units

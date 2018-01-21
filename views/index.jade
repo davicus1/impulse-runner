@@ -17,3 +17,12 @@ block content
           td= move
   p [Prev Impulse]
   button#nextImpulse() Next Impulse
+  table#movingUnits
+    tr
+      th= "Speed"
+      th= "Counter"
+    tbody
+      each movingUnit in movingUnits
+        tr
+        td= movingUnit.speed
+        td= movingUnit.counter

@@ -21,6 +21,7 @@ function unit(id) {
     this.speed = 0;
     this.race = "Generic";
     this.type = "Unknown";
+    //TODO:Turn Mode? Will allow sorting move order
 };
 
 

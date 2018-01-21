@@ -16,6 +16,12 @@ module.exports = function(app) {
     app.route('/api/impulse/moves/:impulseNum')
         .get(impulseControl.get_moves_in_impulse_num);
 
+    app.route('/api/impulse/units/moves')
+        .get(impulseControl.get_units_moves_in_current_impulse);
+
+    app.route('/api/impulse/units/moves/:impulseNum')
+        .get(impulseControl.get_units_moves_in_impulse_num);
+
     app.route('/api/units')
         .get(impulseControl.get_units);
 
